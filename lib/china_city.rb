@@ -14,6 +14,15 @@ module ChinaCity
       children = data
       children = children[province_id][:children] if children.has_key?(province_id)
       children = children[city_id][:children] if children.has_key?(city_id)
+
+      # 显示直辖市
+      if children.size <4
+        n_children = {}
+        children.each_key do |d|
+          n_children.merge!(children[d][:children])
+        end
+        children = n_children
+      end
       children.each_key do |id|
         result.push [ children[id][:text], id]
       end
